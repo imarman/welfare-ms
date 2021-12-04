@@ -1,5 +1,6 @@
 package com.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.manage.model.SysUser;
 import com.manage.model.comm.R;
 import com.manage.service.SysUserService;
@@ -22,6 +23,7 @@ public class SysUserController {
     @Resource
     SysUserService sysUserService;
 
+    @SaCheckLogin
     @GetMapping("all")
     public R getAllUser() {
         List<SysUser> list = sysUserService.list();
