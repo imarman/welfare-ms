@@ -53,7 +53,7 @@ public class SysUser implements Serializable {
     /**
      * 性别
      */
-    private Boolean gender;
+    private String gender;
 
     /**
      * 生日

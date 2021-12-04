@@ -11,7 +11,7 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="gender" jdbcType="BOOLEAN" property="gender" />
-    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
     <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
     <result column="status" jdbcType="BOOLEAN" property="status" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />

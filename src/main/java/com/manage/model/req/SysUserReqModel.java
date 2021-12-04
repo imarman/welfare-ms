@@ -28,4 +28,10 @@ public class SysUserReqModel implements Serializable {
      */
     private String mobile;
 
+    /**
+     * 验证码
+     */
+    private String verifyCode;
+
+
 }
