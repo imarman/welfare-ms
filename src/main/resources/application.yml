@@ -1,0 +1,61 @@
+
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 45m
+    context-path: /api/
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    locale: zh_CN
+    generator:
+      write-numbers-as-strings: true
+      write-bigdecimal-as-plain: true
+    serialization:
+      write-dates-as-timestamps: false
+
+
+
+  # 邮件
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: mpw:Yk09NqI4fI4iphMS2aynlY7plwFaz/RRuqk0lUc3btg=
+    password: mpw:O4FYj8IIEZQfUSHX6rkj/gsb4kTRwM2OBBHcFSzaZZQ=
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+        debug: true
+
+
+# mybatis-plus
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/*.xml
+
+# Sa-Token配置
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: token
+  # token有效期，单位s 默认30天, -1代表永不过期，
+  timeout: 864000 # 十天
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  activity-timeout: 259200 # 三天， 如果一直有操作，那就不会过期，如果指定天数只能没有操作，将会过期
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: false
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: simple-uuid
+  # token前缀
+  #  token-prefix: Bearer
+  # 是否输出操作日志
+  is-log: true
+  is-read-cookie: false
