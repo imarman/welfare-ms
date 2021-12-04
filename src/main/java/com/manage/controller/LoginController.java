@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.db.Session;
 import com.manage.common.VerificationCode;
 import com.manage.model.comm.R;
 import com.manage.model.req.SysUserReqModel;
@@ -21,26 +20,35 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+
+import static com.manage.common.ResultCodeEnum.LOGIN_AUTH;
 
 /**
  * @date 2021/12/4 16:00
  */
 @RestController
 @Slf4j
+// @CrossOrigin
 public class LoginController {
+
+    private final static HashMap<String, String> map = new HashMap<>();
+
+    private final String VERIFY_CODE = "verify_code";
 
     @Resource
     SysUserService sysUserService;
 
     @PostMapping("/login")
     public R login(@RequestBody SysUserReqModel userModel, HttpServletRequest request) {
-        if (StpUtil.isLogin()) {
-            return R.ok("该用户已经登陆");
+        String verifyCode = map.get(VERIFY_CODE);
+        if (verifyCode == null) {
+            return R.error("网络开小差了～～");
         }
-        String verifyCode = (String) request.getSession().getAttribute("verify_code");
         if (userModel.getVerifyCode() == null || !StrUtil.equalsAnyIgnoreCase(verifyCode, userModel.getVerifyCode())) {
             return R.error("验证码错误");
         }
+        map.remove(VERIFY_CODE);
         boolean res = sysUserService.login(userModel);
         if (res) {
             SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
@@ -49,14 +57,27 @@ public class LoginController {
         return R.error("登陆失败");
     }
 
-    @SaCheckLogin
     @GetMapping("/logout")
     public R logout() {
         if (!StpUtil.isLogin()) {
-            return R.error("请先登陆");
+            return R.errorMsg(LOGIN_AUTH, "请重新登录!");
         }
         StpUtil.logout(StpUtil.getLoginId());
         return R.ok("成功退出");
+    }
+
+    /**
+     * 获取用户信息
+     */
+    @SaCheckLogin
+    @GetMapping("/sysUser/getInfo")
+    public R getInfo() {
+        log.info("获取用户信息");
+        HashMap<String,Object> userInfo = new HashMap<>();
+        userInfo.put("name", "admin");
+        userInfo.put("roles", "[admin]");
+        userInfo.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        return R.ok(userInfo);
     }
 
     @GetMapping("/verifyCode")
@@ -64,8 +85,10 @@ public class LoginController {
         VerificationCode code = new VerificationCode();
         BufferedImage image = code.getImage();
         String text = code.getText();
-        HttpSession session = request.getSession(true);
-        session.setAttribute("verify_code", text);
+        resp.setDateHeader("Expires", 0);
+        map.put(VERIFY_CODE, text);
+        HttpSession session = request.getSession();
+        session.setAttribute(VERIFY_CODE, text);
         log.info("验证码：{}", text);
         VerificationCode.output(image, resp.getOutputStream());
     }
