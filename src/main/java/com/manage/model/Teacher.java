@@ -50,6 +50,11 @@ public class Teacher implements Serializable {
     private String campus;
 
     /**
+     * 校区名
+     */
+    private String campusName;
+
+    /**
      * 学院
      */
     private String college;
