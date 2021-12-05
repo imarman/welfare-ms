@@ -1,7 +1,9 @@
 package com.manage.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -9,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
+
+    @Value("${upload.rootPath}")
+    public String rootPath;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -24,5 +29,11 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 //暴露哪些原始请求头部信息
                 .exposedHeaders("*");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("file:" + rootPath);
     }
 }
