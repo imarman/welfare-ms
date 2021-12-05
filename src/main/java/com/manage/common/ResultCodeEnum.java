@@ -41,6 +41,8 @@ public enum ResultCodeEnum {
     USER_NOT_EXIST(false, 30001, "用户不存在"),
     BAD_PASSWORD(false, 30002, "账号或密码错误"),
 
+    PARAMS_MISSING(false, 40000, "参数有误"),
+
             ;
 
 
