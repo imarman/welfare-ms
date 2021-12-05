@@ -1,5 +1,6 @@
 package com.manage.controller;
 
+import com.manage.model.Teacher;
 import com.manage.model.comm.R;
 import com.manage.model.req.TeacherReqModel;
 import com.manage.service.TeacherService;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 /**
  * @date 2021/12/5 14:23
@@ -33,6 +35,30 @@ public class TeacherController {
         reqModel.setName(name);
         log.info("list 方法执行，参数：reqModel:{}", reqModel);
         return R.ok(teacherService.selectTeachersByWrapper(reqModel));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public R delete(@PathVariable Long id) {
+        log.info("delete 方法执行，参数：id:{}", id);
+        boolean res = teacherService.removeById(id);
+        if (res) {
+            return R.ok();
+        }
+        return R.error("删除失败");
+    }
+
+    @PostMapping("save")
+    public R save(@RequestBody Teacher teacher) {
+        log.info("save方法执行，参数：teacher:{}", teacher);
+        if (teacher.getId() == null) {
+            teacher.setGmtCreate(LocalDateTime.now());
+        }
+        teacher.setGmtModified(LocalDateTime.now());
+        boolean save = teacherService.saveOrUpdate(teacher);
+        if (save) {
+            return R.ok();
+        }
+        return R.error("新增失败");
     }
 
 }
