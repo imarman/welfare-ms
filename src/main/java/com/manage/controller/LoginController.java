@@ -29,18 +29,17 @@ import static com.manage.common.ResultCodeEnum.LOGIN_AUTH;
  */
 @RestController
 @Slf4j
-// @CrossOrigin
 public class LoginController {
 
-    private final static HashMap<String, String> map = new HashMap<>();
+    private static final HashMap<String, String> map = new HashMap<>();
 
-    private final String VERIFY_CODE = "verify_code";
+    private static final String VERIFY_CODE = "verify_code";
 
     @Resource
     SysUserService sysUserService;
 
     @PostMapping("/login")
-    public R login(@RequestBody SysUserReqModel userModel, HttpServletRequest request) {
+    public R login(@RequestBody SysUserReqModel userModel) {
         String verifyCode = map.get(VERIFY_CODE);
         if (verifyCode == null) {
             return R.error("网络开小差了～～");
