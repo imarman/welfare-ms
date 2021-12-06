@@ -1,8 +1,7 @@
-package com.manage.model;
+package com.manage.model.resp;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -10,11 +9,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
-    @date 2021/12/4 15:34
-*/
+ * @date 2021/12/6 23:57
+ */
 @Data
-@TableName(value = "sys_user")
-public class SysUser implements Serializable {
+public class SysUserResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -92,4 +90,6 @@ public class SysUser implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtModified;
+
+    private String manageCampus;
 }

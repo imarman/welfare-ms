@@ -1,5 +1,6 @@
 package com.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.manage.model.comm.R;
 import com.manage.service.CampusService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class CampusController {
     CampusService campusService;
 
     @GetMapping("/list")
+    @SaCheckLogin
     public R getAll() {
         return R.ok(campusService.list());
     }

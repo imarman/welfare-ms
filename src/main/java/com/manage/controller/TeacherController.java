@@ -1,5 +1,6 @@
 package com.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import com.manage.common.RoleConst;
@@ -42,6 +43,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @SaCheckLogin
     public R delete(@PathVariable Long id) {
         log.info("delete 方法执行，参数：id:{}", id);
         boolean res = teacherService.removeById(id);
@@ -52,6 +54,7 @@ public class TeacherController {
     }
 
     @PostMapping("save")
+    @SaCheckLogin
     public R save(@RequestBody Teacher teacher) {
         log.info("save方法执行，参数：teacher:{}", teacher);
         if (teacher.getId() == null) {
