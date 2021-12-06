@@ -5,6 +5,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.manage.common.VerificationCode;
+import com.manage.model.SysUser;
 import com.manage.model.comm.R;
 import com.manage.model.req.SysUserReqModel;
 import com.manage.service.SysUserService;
@@ -72,10 +73,12 @@ public class LoginController {
     @GetMapping("/sysUser/getInfo")
     public R getInfo() {
         log.info("获取用户信息");
+        String userID = (String) StpUtil.getLoginId();
+        SysUser sysUser = sysUserService.getById(userID);
         HashMap<String,Object> userInfo = new HashMap<>();
-        userInfo.put("name", "admin");
-        userInfo.put("roles", "[admin]");
-        userInfo.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        userInfo.put("name", sysUser.getUsername());
+        userInfo.put("role", sysUser.getRole());
+        userInfo.put("avatar", sysUser.getAvatar());
         return R.ok(userInfo);
     }
 

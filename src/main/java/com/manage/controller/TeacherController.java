@@ -1,5 +1,8 @@
 package com.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaMode;
+import com.manage.common.RoleConst;
 import com.manage.model.Teacher;
 import com.manage.model.comm.R;
 import com.manage.model.req.TeacherReqModel;
@@ -21,6 +24,7 @@ public class TeacherController {
     @Resource
     TeacherService teacherService;
 
+    @SaCheckRole(value = {RoleConst.ADMIN_ROLE, RoleConst.MANAGER_ROLE}, mode = SaMode.OR)
     @GetMapping("/all/{current}/{limit}")
     public R list(@PathVariable Integer current, @PathVariable Integer limit ,
                   @RequestParam(required = false) String name,

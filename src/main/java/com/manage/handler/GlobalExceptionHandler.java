@@ -1,6 +1,7 @@
 package com.manage.handler;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.manage.common.BusinessException;
 import com.manage.common.ResultCodeEnum;
 import com.manage.model.comm.R;
@@ -74,6 +75,13 @@ public class GlobalExceptionHandler {
         }
         // 返回给前端
         return R.errorMsg(ResultCodeEnum.LOGIN_AUTH, message);
+    }
+
+    @ExceptionHandler(NotRoleException.class)
+    public R handlerNotRoleException(NotRoleException nle) {
+        log.error("报错信息 exception:{}", nle.getMessage());
+        // 返回给前端
+        return R.errorMsg(ResultCodeEnum.LOGIN_ACL, "权限不足，无法操作～");
     }
 
     @ExceptionHandler(Exception.class)

@@ -55,6 +55,11 @@ public class SysUser implements Serializable {
     private String gender;
 
     /**
+     * 角色
+     */
+    private String role;
+
+    /**
      * 生日
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

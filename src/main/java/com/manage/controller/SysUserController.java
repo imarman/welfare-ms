@@ -23,6 +23,7 @@ public class SysUserController {
     @Resource
     SysUserService sysUserService;
 
+
     @SaCheckLogin
     @GetMapping("all")
     public R getAllUser() {
