@@ -103,10 +103,10 @@ public class SysUserController {
     }
 
 
-    @GetMapping("/avoidManager")
-    public R getAvoidManager(@RequestParam String manager) {
-
-        SysUser user = sysUserService.getById(manager);
+    @GetMapping("/avoidManager/{manager}")
+    public R getAvoidManager(@PathVariable("manager") String managerId) {
+        log.info("getAvoidManager方法执行，参数：managerId:{}", managerId);
+        SysUser user = sysUserService.getById(managerId);
         List<SysUser> resList = campusService.getAvoidManager();
         if (user != null) {
             resList.add(user);
