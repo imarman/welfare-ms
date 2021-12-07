@@ -95,6 +95,24 @@ public class SysUserController {
         return sysUserService.removeById(id) ? R.ok(): R.error();
     }
 
+    @GetMapping("/managers")
+    public R getManagers() {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getRole, RoleConst.MANAGER_ROLE);
+        return R.ok(sysUserService.list(wrapper));
+    }
+
+
+    @GetMapping("/avoidManager")
+    public R getAvoidManager(@RequestParam String manager) {
+
+        SysUser user = sysUserService.getById(manager);
+        List<SysUser> resList = campusService.getAvoidManager();
+        if (user != null) {
+            resList.add(user);
+        }
+        return R.ok(resList);
+    }
 
 }
 
