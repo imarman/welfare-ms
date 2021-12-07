@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
+import com.manage.common.ResultCodeEnum;
 import com.manage.common.VerificationCode;
 import com.manage.model.SysUser;
 import com.manage.model.comm.R;
@@ -23,7 +24,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static com.manage.common.ResultCodeEnum.LOGIN_AUTH;
 
 /**
  * @date 2021/12/4 16:00
@@ -46,7 +46,7 @@ public class LoginController {
             return R.error("网络开小差了～～");
         }
         if (userModel.getVerifyCode() == null || !StrUtil.equalsAnyIgnoreCase(verifyCode, userModel.getVerifyCode())) {
-            return R.error("验证码错误");
+            return R.error(ResultCodeEnum.CODE_ERROR);
         }
         map.remove(VERIFY_CODE);
         boolean res = sysUserService.login(userModel);
@@ -60,7 +60,7 @@ public class LoginController {
     @GetMapping("/logout")
     public R logout() {
         if (!StpUtil.isLogin()) {
-            return R.errorMsg(LOGIN_AUTH, "请重新登录!");
+            return R.errorMsg(ResultCodeEnum.LOGIN_AUTH, "请重新登录!");
         }
         StpUtil.logout(StpUtil.getLoginId());
         return R.ok("成功退出");
