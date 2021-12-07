@@ -1,20 +1,19 @@
 package com.manage.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manage.model.Campus;
-import com.manage.model.SysUser;
 import com.manage.model.comm.R;
 import com.manage.model.resp.CampusPageResponse;
 import com.manage.service.CampusService;
-import com.manage.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
  * @date 2021/12/5 18:24
@@ -51,9 +50,6 @@ public class CampusController {
         }
         if (StrUtil.isNotBlank(timeRangeStr)) {
             String[] dateRange = timeRangeStr.split(",");
-
-            // LocalDateTime began = LocalDateTimeUtil.parse(dateRange[0], "yyyy-MM-dd");
-            // LocalDateTime end = LocalDateTimeUtil.parse(dateRange[1], "yyyy-MM-dd");
             wrapper.between(Campus::getBuildTime, dateRange[0], dateRange[1]);
         }
         Page<Campus> campusPage = campusService.page(page, wrapper);
@@ -64,6 +60,32 @@ public class CampusController {
         return R.ok(campusResponse);
     }
 
+    @PostMapping("/save/{buildTime}")
+    public R saveOrUpdate(@PathVariable String buildTime, @RequestBody Campus campus) {
+        log.info("saveOrUpdate方法执行，参数：buildTime:{}, campus:{}", buildTime, campus);
+        if (StrUtil.isNotBlank(buildTime)) {
+            campus.setBuildTime(LocalDateTimeUtil.parse(buildTime, "yyyy-MM-dd"));
+        }
+        if (campus == null) {
+            return R.error();
+        }
+        if (campus.getId() == null) {
+            campus.setGmtCreate(LocalDateTime.now());
+        }
+        campus.setGmtModify(LocalDateTime.now());
+        campusService.saveOrUpdate(campus);
+        return R.ok();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public R saveOrUpdate(@PathVariable String id) {
+        log.info("saveOrUpdate方法执行，参数：id:{}", id);
+        if (StrUtil.isNotBlank(id)) {
+            campusService.removeById(id);
+            return R.ok();
+        }
+        return R.error();
+    }
 
 
 }
