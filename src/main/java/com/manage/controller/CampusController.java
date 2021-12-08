@@ -1,19 +1,20 @@
 package com.manage.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manage.model.Campus;
+import com.manage.model.Teacher;
 import com.manage.model.comm.R;
 import com.manage.model.resp.CampusPageResponse;
 import com.manage.service.CampusService;
+import com.manage.service.TeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @date 2021/12/5 18:24
@@ -25,6 +26,9 @@ public class CampusController {
 
     @Resource
     CampusService campusService;
+
+    @Resource
+    TeacherService teacherService;
 
     @GetMapping("/list")
     @SaCheckLogin
@@ -60,19 +64,16 @@ public class CampusController {
         return R.ok(campusResponse);
     }
 
-    @PostMapping("/save/{buildTime}")
-    public R saveOrUpdate(@PathVariable String buildTime, @RequestBody Campus campus) {
-        log.info("saveOrUpdate方法执行，参数：buildTime:{}, campus:{}", buildTime, campus);
-        if (StrUtil.isNotBlank(buildTime)) {
-            campus.setBuildTime(LocalDateTimeUtil.parse(buildTime, "yyyy-MM-dd"));
-        }
+    @PostMapping("/save")
+    public R saveOrUpdate( @RequestBody Campus campus) {
+        log.info("saveOrUpdate方法执行，参数: campus:{}", campus);
         if (campus == null) {
             return R.error();
         }
         if (campus.getId() == null) {
-            campus.setGmtCreate(LocalDateTime.now());
+            campus.setGmtCreate(new Date());
         }
-        campus.setGmtModify(LocalDateTime.now());
+        campus.setGmtModify(new Date());
         campusService.saveOrUpdate(campus);
         return R.ok();
     }
