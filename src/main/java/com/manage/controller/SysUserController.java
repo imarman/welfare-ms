@@ -6,6 +6,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.manage.common.BusinessException;
+import com.manage.common.ResultCodeEnum;
 import com.manage.common.RoleConst;
 import com.manage.model.Campus;
 import com.manage.model.SysUser;
@@ -73,11 +75,18 @@ public class SysUserController {
     @PostMapping("save")
     @SaCheckLogin
     public R save(@RequestBody SysUser sysUser) {
+        if (sysUser.getMobile() == null || StrUtil.isBlank(sysUser.getMobile())) {
+            throw new BusinessException(ResultCodeEnum.PARAMS_MISSING, "手机号不能为空，并且唯一");
+        }
+        SysUser one = sysUserService.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getMobile, sysUser.getMobile()));
+        if (one != null) {
+            throw new BusinessException(ResultCodeEnum.REGISTER_MOBILE_ERROR,"该手机号已被使用，请更换手机号～");
+        }
         if (sysUser.getId() == null) {
             sysUser.setGmtCreate(LocalDateTime.now());
         }
         sysUser.setGmtModified(LocalDateTime.now());
-        sysUser.setRole(RoleConst.ADMIN_AND_MANAGER);
+        sysUser.setRole(RoleConst.MANAGER_ROLE);
         sysUser.setRoot(0);
         if (StrUtil.isNotBlank(sysUser.getPassword())) {
             String MD5Pwd = MD5.create().digestHex16(sysUser.getPassword());

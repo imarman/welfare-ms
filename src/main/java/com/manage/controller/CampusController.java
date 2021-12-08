@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.manage.common.BusinessException;
+import com.manage.common.ResultCodeEnum;
 import com.manage.model.Campus;
 import com.manage.model.Teacher;
 import com.manage.model.comm.R;
@@ -81,6 +83,12 @@ public class CampusController {
     @DeleteMapping("/delete/{id}")
     public R saveOrUpdate(@PathVariable String id) {
         log.info("saveOrUpdate方法执行，参数：id:{}", id);
+
+        LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<>();
+        Teacher one = teacherService.getOne(wrapper.eq(Teacher::getCampus, id));
+        if (one != null) {
+            throw new BusinessException(ResultCodeEnum.PARAM_ERROR, "已有教师在该校区，取消关联后在删除");
+        }
         if (StrUtil.isNotBlank(id)) {
             campusService.removeById(id);
             return R.ok();
