@@ -16,6 +16,7 @@ import com.manage.model.resp.SysUserResponse;
 import com.manage.service.CampusService;
 import com.manage.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -100,7 +101,16 @@ public class SysUserController {
 
     @DeleteMapping("/delete/{id}")
     @SaCheckLogin
+    @Transactional(rollbackFor = Exception.class)
     public R delete(@PathVariable String id) {
+        log.info("delete方法执行，参数：id:{}", id);
+        Campus one = campusService.getOne(new LambdaQueryWrapper<Campus>().eq(Campus::getManager, id));
+        // 如果该负责人负责了某个校区，删除前先把关联的校区的负责人字段清空
+        if (one != null) {
+            one.setManager(null);
+            campusService.updateById(one);
+        }
+
         return sysUserService.removeById(id) ? R.ok(): R.error();
     }
 

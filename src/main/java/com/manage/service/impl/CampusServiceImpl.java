@@ -1,6 +1,7 @@
 package com.manage.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.manage.common.RoleConst;
@@ -37,9 +38,13 @@ public class CampusServiceImpl extends ServiceImpl<CampusMapper, Campus> impleme
         List<String> campusManagerList = getBaseMapper().selectList(null).stream().map(Campus::getManager).distinct().collect(Collectors.toList());
 
         // 挑出暂时还没负责校区的"空闲"负责人
-        List<String> collect = CollUtil.disjunction(sysIdList, campusManagerList).stream().filter(Objects::nonNull).collect(Collectors.toList());
+        List<String> collect = new ArrayList<>(CollUtil.disjunction(sysIdList, campusManagerList));
         List<SysUser> sysUsers = new ArrayList<>();
-        collect.forEach(id -> sysUsers.add(sysUserService.getById(id)));
+        collect.forEach(id -> {
+            if (id != null && StrUtil.isNotBlank(id)) {
+                sysUsers.add(sysUserService.getById(id));
+            }
+        });
 
         return sysUsers;
     }
