@@ -79,6 +79,7 @@ public class LoginController {
         userInfo.put("name", sysUser.getUsername());
         userInfo.put("role", sysUser.getRole());
         userInfo.put("avatar", sysUser.getAvatar());
+        userInfo.put("id", sysUser.getId());
         return R.ok(userInfo);
     }
 
