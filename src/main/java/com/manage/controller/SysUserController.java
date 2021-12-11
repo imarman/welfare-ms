@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -84,9 +85,9 @@ public class SysUserController {
             throw new BusinessException(ResultCodeEnum.REGISTER_MOBILE_ERROR,"该手机号已被使用，请更换手机号～");
         }
         if (sysUser.getId() == null) {
-            sysUser.setGmtCreate(LocalDateTime.now());
+            sysUser.setGmtCreate(new Date());
         }
-        sysUser.setGmtModified(LocalDateTime.now());
+        sysUser.setGmtModified(new Date());
         sysUser.setRole(RoleConst.MANAGER_ROLE);
         sysUser.setRoot(0);
         if (StrUtil.isNotBlank(sysUser.getPassword())) {
