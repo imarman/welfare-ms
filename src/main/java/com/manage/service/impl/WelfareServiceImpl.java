@@ -46,7 +46,9 @@ public class WelfareServiceImpl extends ServiceImpl<WelfareMapper, Welfare> impl
         List<Welfare> welfareList = page.getRecords();
         welfareList.forEach(welfare -> {
             WelfareCategory welfareCategory = welfareCategoryService.getById(welfare.getCategoryId());
-            welfare.setCategoryName(welfareCategory.getCategoryName());
+            if (welfareCategory != null) {
+                welfare.setCategoryName(welfareCategory.getCategoryName());
+            }
         });
         response.setWelfareList(welfareList);
         response.setPages(page.getPages());
