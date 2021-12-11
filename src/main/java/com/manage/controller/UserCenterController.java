@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.manage.common.BusinessException;
 import com.manage.common.ResultCodeEnum;
 import com.manage.model.Campus;
@@ -14,12 +13,10 @@ import com.manage.model.req.ChangePwdReqModel;
 import com.manage.model.resp.SysUserResponse;
 import com.manage.service.CampusService;
 import com.manage.service.SysUserService;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -54,11 +51,11 @@ public class UserCenterController {
         log.info("更改密码方法执行，参数：reqModel:{}", reqModel);
         SysUser sysUser = sysUserService.getById(reqModel.getId());
         // 对输入的老密码进行加密
-        String encryptOldPwd = MD5.create().digestHex16(reqModel.getOdlPassword());
+        String encryptOldPwd = MD5.create().digestHex16(reqModel.getOldPassword());
         if (!StrUtil.equals(sysUser.getPassword(), encryptOldPwd)) {
             throw new BusinessException(ResultCodeEnum.PARAMS_MISSING, "旧密码错误，请重新输入");
         }
-        sysUser.setPassword(encryptOldPwd);
+        sysUser.setPassword(MD5.create().digestHex16(reqModel.getNewPassword()));
         return sysUserService.updateById(sysUser) ? R.ok() : R.error();
     }
 

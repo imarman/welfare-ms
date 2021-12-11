@@ -20,7 +20,7 @@ public class ChangePwdReqModel implements Serializable {
     /**
      * 旧密码
      */
-    private String odlPassword;
+    private String oldPassword;
 
     /**
      * 新密码
