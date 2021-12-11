@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
     @date 2021/12/4 15:34
@@ -68,13 +68,13 @@ public class SysUser implements Serializable {
      * 生日
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     /**
      * 注册时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime regTime;
+    private Date regTime;
 
     /**
      * 用户状态(正常:0, 未激活:1, 冻结:2)
@@ -85,11 +85,11 @@ public class SysUser implements Serializable {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
 
     /**
      * 更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gmtModified;
+    private Date gmtModified;
 }
