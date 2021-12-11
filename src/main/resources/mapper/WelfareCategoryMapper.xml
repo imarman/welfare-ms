@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.mapper.WelfareCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.manage.model.WelfareCategory">
+    <!--@mbg.generated-->
+    <!--@Table welfare_category-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modifed" jdbcType="TIMESTAMP" property="gmtModifed" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, category_name, gmt_create, gmt_modifed
+  </sql>
+</mapper>
