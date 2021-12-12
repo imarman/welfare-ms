@@ -90,6 +90,14 @@ public class ApplyingWelfareController {
             });
             return R.ok(list);
         }
+        if (RoleConst.ADMIN_ROLE.equals(sysUser.getRole())) {
+            List<ApplyWelfare> list = applyWelfareService.list();
+            list.forEach(applyWelfare -> {
+                Teacher byId = teacherService.getById(applyWelfare.getTeacherId());
+                applyWelfare.setTeacherName(byId.getName());
+            });
+            return R.ok(list);
+        }
         return R.ok(new ArrayList<>());
     }
 
