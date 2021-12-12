@@ -35,6 +35,11 @@ public class WelfareController {
         return R.ok(welfareService.selectWelfareByWrapper(reqModel));
     }
 
+    @GetMapping("/list")
+    public R all() {
+        return R.ok(welfareService.list());
+    }
+
     @PostMapping("/save")
     public R save(@RequestBody Welfare welfare) {
         if (welfare.getId() == null) {

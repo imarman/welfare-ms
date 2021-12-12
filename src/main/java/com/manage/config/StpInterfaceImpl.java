@@ -41,8 +41,10 @@ public class StpInterfaceImpl implements StpInterface {
         // 本list仅做模拟，实际项目中要根据具体业务逻辑来查询角色
         String id = (String) StpUtil.getLoginId();
         SysUser sysUser = sysUserService.getById(id);
-        String[] split = sysUser.getRole().split(",");
-        return new ArrayList<>(Arrays.asList(split));
+        // String[] split = sysUser.getRole().split(",");
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add(sysUser.getRole());
+        return strings;
     }
 
 }
