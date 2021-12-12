@@ -1,9 +1,6 @@
-
 server:
-  port: 8080
+  port: 8090
   servlet:
-    session:
-      timeout: 45m
     context-path: /api/
 
 spring:
@@ -25,6 +22,11 @@ spring:
       # 单个文件的最大值
       max-file-size: 10MB
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///welfare-ms?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: xx
+    password: xx
 
   # 邮件
   mail:
@@ -40,6 +42,9 @@ spring:
             class: javax.net.ssl.SSLSocketFactory
         debug: true
 
+upload:
+  filePath: "/xxx/static/avatar"
+  rootPath: "/xxx/static/"
 
 # mybatis-plus
 mybatis-plus:
