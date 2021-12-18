@@ -4,21 +4,22 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.manage.common.BusinessException;
 import com.manage.common.ResultCodeEnum;
-import com.manage.model.req.SysUserReqModel;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.manage.mapper.SysUserMapper;
 import com.manage.model.SysUser;
+import com.manage.model.req.SysUserReqModel;
 import com.manage.service.SysUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
 /**
-    @date 2021/12/4 15:33
-*/
+ * @date 2021/12/4 15:33
+ */
 @Service
 @Slf4j
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService{
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Override
     public boolean login(SysUserReqModel userModel) {

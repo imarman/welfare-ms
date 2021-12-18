@@ -1,7 +1,7 @@
 package com.manage.service;
 
-import com.manage.model.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.manage.model.SysUser;
 import com.manage.model.req.SysUserReqModel;
 
 /**

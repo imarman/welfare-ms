@@ -1,19 +1,14 @@
 package com.manage.config;
 
-/**
- * @date 2021/12/6 13:46
- */
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
 import com.manage.model.SysUser;
 import com.manage.service.SysUserService;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

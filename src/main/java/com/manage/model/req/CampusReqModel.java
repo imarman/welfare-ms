@@ -1,11 +1,8 @@
 package com.manage.model.req;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @date 2021/12/7 23:22

@@ -15,11 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
-    @date 2021/12/5 14:08
-*/
+ * @date 2021/12/5 14:08
+ */
 @Service
 @Slf4j
-public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService{
+public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
 
     @Override
     public TeacherResponse selectTeachersByWrapper(TeacherReqModel model) {

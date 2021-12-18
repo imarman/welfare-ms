@@ -22,7 +22,7 @@ public class WelfareController {
     WelfareService welfareService;
 
     @GetMapping("/all/{current}/{limit}")
-    public R list(@PathVariable Integer current, @PathVariable Integer limit ,
+    public R list(@PathVariable Integer current, @PathVariable Integer limit,
                   @RequestParam(required = false) String name,
                   @RequestParam(required = false) String categoryId) {
         log.info("添加福利方法执行，参数：current:{}, limit:{}, name:{}, categoryId:{}", current, limit, name, categoryId);

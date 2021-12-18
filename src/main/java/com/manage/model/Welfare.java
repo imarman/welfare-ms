@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
     @date 2021/12/11 13:01

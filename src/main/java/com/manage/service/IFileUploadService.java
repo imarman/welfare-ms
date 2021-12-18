@@ -11,6 +11,7 @@ public interface IFileUploadService {
 
     /**
      * 文件上传
+     *
      * @param file 文件兑现
      * @return 地址
      */

@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
-    @date 2021/12/5 14:09
-*/
+ * @date 2021/12/5 14:09
+ */
 @Data
 @TableName(value = "teacher")
 public class Teacher implements Serializable {

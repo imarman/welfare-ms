@@ -4,15 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
-    @date 2021/12/12 14:36
-*/
+ * @date 2021/12/12 14:36
+ */
 @Data
 @TableName(value = "apply_welfare")
 public class ApplyWelfare implements Serializable {

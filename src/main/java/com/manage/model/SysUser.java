@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
-    @date 2021/12/4 15:34
-*/
+ * @date 2021/12/4 15:34
+ */
 @Data
 @TableName(value = "sys_user")
 public class SysUser implements Serializable {

@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
-    @date 2021/12/5 18:22
-*/
+ * @date 2021/12/5 18:22
+ */
 public interface CampusMapper extends BaseMapper<Campus> {
 
     @Select("select id, username from sys_user where id not in (select DISTINCT manager from campus) and role = 'MANAGER'")

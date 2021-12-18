@@ -27,7 +27,7 @@ public class TeacherController {
 
     @SaCheckRole(value = {RoleConst.ADMIN_ROLE, RoleConst.MANAGER_ROLE}, mode = SaMode.OR)
     @GetMapping("/all/{current}/{limit}")
-    public R list(@PathVariable Integer current, @PathVariable Integer limit ,
+    public R list(@PathVariable Integer current, @PathVariable Integer limit,
                   @RequestParam(required = false) String name,
                   @RequestParam(required = false) String campus,
                   @RequestParam(required = false) String level) {

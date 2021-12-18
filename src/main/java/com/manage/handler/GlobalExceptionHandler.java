@@ -42,8 +42,8 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     *  入参校验错误
-     *  MethodArgumentNotValidException 就是 当对用@Valid注释的参数的验证失败时抛出的异常
+     * 入参校验错误
+     * MethodArgumentNotValidException 就是 当对用@Valid注释的参数的验证失败时抛出的异常
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public R handleArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {

@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,7 +45,7 @@ public class SysUserController {
      */
     @SaCheckLogin
     @GetMapping("all/{current}/{limit}")
-    public R getAllUser(@PathVariable Integer current, @PathVariable Integer limit,@RequestParam String name) {
+    public R getAllUser(@PathVariable Integer current, @PathVariable Integer limit, @RequestParam String name) {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
         Page<SysUser> sysUserPage = new Page<>(current, limit);
         wrapper.eq(SysUser::getRoot, 0);
@@ -82,7 +81,7 @@ public class SysUserController {
         }
         SysUser one = sysUserService.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getMobile, sysUser.getMobile()));
         if (one != null) {
-            throw new BusinessException(ResultCodeEnum.REGISTER_MOBILE_ERROR,"该手机号已被使用，请更换手机号～");
+            throw new BusinessException(ResultCodeEnum.REGISTER_MOBILE_ERROR, "该手机号已被使用，请更换手机号～");
         }
         if (sysUser.getId() == null) {
             sysUser.setGmtCreate(new Date());
@@ -112,7 +111,7 @@ public class SysUserController {
             campusService.updateById(one);
         }
 
-        return sysUserService.removeById(id) ? R.ok(): R.error();
+        return sysUserService.removeById(id) ? R.ok() : R.error();
     }
 
     @GetMapping("/managers")
